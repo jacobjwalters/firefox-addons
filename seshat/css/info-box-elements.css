@@ -1,0 +1,30 @@
+h3 {
+    margin: 0 0 10px 0;
+    font-size: 16px;
+    color: black;
+}
+
+p {
+    margin: 5px 0;
+    font-size: 14px;
+    color: black;
+}
+
+textarea.note-input {
+    width: calc(100% + 20px);
+    margin-left: -10px;
+    padding: 10px;
+    box-sizing: border-box;
+    font-size: 14px;
+    background-color: #eee !important;
+    color: #000;
+    border: 0px;
+    outline: none;
+    resize: none;
+    font-family: sans;
+}
+
+input.editable-input {
+    box-sizing: border-box;
+}
+

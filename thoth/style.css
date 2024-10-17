@@ -1,0 +1,45 @@
+/* styles.css */
+
+.query-input-box {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: white;
+  padding: 20px;
+  border: 1px solid black;
+  z-index: 10000;
+}
+
+.query-input {
+  width: 300px;
+  padding: 5px;
+  margin-right: 10px;
+}
+
+.query-button {
+  padding: 8px 15px;
+  margin-right: 10px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+}
+
+.query-button:hover {
+  background-color: #0056b3;
+}
+
+.query-results {
+  margin-top: 10px;
+}
+
+.query-link {
+  text-decoration: none;
+  color: #007bff;
+}
+
+.query-link:hover {
+  text-decoration: underline;
+}

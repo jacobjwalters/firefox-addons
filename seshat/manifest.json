@@ -1,0 +1,25 @@
+{
+  "manifest_version": 2,
+  "name": "Seshat",
+  "version": "1.0",
+  "description": "Inter-site user annotation",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "prog-seshat@jacobwalte.rs"
+    }
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "webNavigation",
+    "scripting",
+    "<all_urls>"
+  ],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "icons": {
+    "48": "icons/user-search.svg"
+  }
+}

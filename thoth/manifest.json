@@ -1,0 +1,52 @@
+{
+  "manifest_version": 2,
+  "name": "Thoth",
+  "version": "1.0",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "prog-thoth@jacobwalte.rs"
+    }
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "tabs",
+    "<all_urls>",
+    "*://localhost/*",
+    "*://qs/*"
+  ],
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["Readability.js", "content.js"]
+    }
+  ],
+  "options_page": "options.html",
+  "browser_action": {
+    "default_icon": "icon.svg"
+  },
+  "commands": {
+    "index-page": {
+      "suggested_key": {
+        "default": "Alt+Shift+Q"
+      },
+      "description": "Manually index the current page."
+    },
+    "search-contents-selection": {
+      "suggested_key": {
+        "default": "Alt+Shift+D"
+      },
+      "description": "Search index by the current page contents or selected text."
+    },
+    "show-input-box": {
+      "suggested_key": {
+        "default": "Alt+Shift+A"
+      },
+      "description": "Run a manual query against the index."
+    }
+  }
+}
+
