@@ -40,9 +40,14 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
   if (message.command === 'display-val') {
     console.log("Displaying val", message.val, message.excluded, message.indexed)
-    browser.browserAction.setBadgeText({ text: message.val.toString() })
+
+    if (message.val) {
+      browser.browserAction.setBadgeText({ text: message.val.toString() })
+    } else {
+      browser.browserAction.setBadgeText({ text: " " })
+    }
+
     const colour = badgeColour(message.excluded, message.indexed)
-    console.log("Setting badge colour to", colour)
     browser.browserAction.setBadgeBackgroundColor({ color: colour })
   }
 })

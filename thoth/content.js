@@ -322,8 +322,8 @@ function stopTimer() {
 }
 
 async function initTimer() {
-  const result = await browser.storage.sync.get('excludedUrls')
-  const excludedUrls = result.excludedUrls || []
+  const storage = await browser.storage.sync.get('options')
+  const excludedUrls = storage.options.excludedUrls || []
   const currentUrl = window.location.href
 
   if (isUrlExcluded(currentUrl, excludedUrls)) {
@@ -389,7 +389,7 @@ async function initAddon() {
   const url = window.location.href
   const storage = await browser.storage.sync.get('options')
 
-  if (!storage.options) {
+  if (storage.options === undefined) {
     alert('thoth: You need to set your endpoints!')
   }
   const options = storage.options
