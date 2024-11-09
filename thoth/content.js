@@ -302,6 +302,10 @@ function displayCount() {
 
 async function startTimer() {
   intervalId = setInterval(async () => {
+    if (document.visibilityState !== 'visible') {
+      stopTimer()
+    }
+
     activeTime += 1
 
     displayNum(activeTimeThreshold - activeTime)

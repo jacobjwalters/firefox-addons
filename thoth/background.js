@@ -43,6 +43,8 @@ browser.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
     if (message.val) {
       browser.browserAction.setBadgeText({ text: message.val.toString() })
+    } else if (message.excluded) {
+      browser.browserAction.setBadgeText({ text: "E" })
     } else {
       browser.browserAction.setBadgeText({ text: " " })
     }
