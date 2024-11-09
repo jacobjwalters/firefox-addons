@@ -1,6 +1,6 @@
 let embeddingEndpoint = ''
 let thothdEndpoint = ''
-const activeTimeThreshold = 60
+let activeTimeThreshold = 60
 
 // Per-page globals
 let resultsContainer
@@ -398,6 +398,7 @@ async function initAddon() {
   }
   const options = storage.options
 
+  activeTimeThreshold = options.activeTimeThreshold || 60;
   thothdEndpoint = options.thothdEndpoint || ''
   embeddingEndpoint = options.embeddingEndpoint || ''
   const excludedUrls = options.excludedUrls || []

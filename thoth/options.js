@@ -1,9 +1,11 @@
 async function save() {
+  const activeTimeThreshold = document.getElementById('activeTimeThreshold').value;
   const thothdEndpoint = document.getElementById('thothdEndpoint').value;
   const embeddingEndpoint = document.getElementById('embeddingEndpoint').value;
   const urls = document.getElementById('excludedUrls').value.split('\n').filter(url => url.trim() !== '');
 
   await browser.storage.sync.set({ options: {
+    activeTimeThreshold: activeTimeThreshold,
     thothdEndpoint: thothdEndpoint,
     embeddingEndpoint: embeddingEndpoint,
     excludedUrls: urls
@@ -21,10 +23,12 @@ async function load() {
   }
   const options = result.options;
 
+  const activeTimeThreshold = options.activeTimeThreshold || 60;
   const thothdEndpoint = options.thothdEndpoint || '';
   const embeddingEndpoint = options.embeddingEndpoint || '';
   const urls = options.excludedUrls || [];
 
+  document.getElementById('activeTimeThreshold').value = activeTimeThreshold;
   document.getElementById('thothdEndpoint').value = thothdEndpoint;
   document.getElementById('embeddingEndpoint').value = embeddingEndpoint;
   document.getElementById('excludedUrls').value = urls.join('\n');
