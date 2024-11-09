@@ -10,10 +10,19 @@
 </head>
 <body>
   <h1>Extension Options</h1>
-  <label for="excludedUrls">Excluded URLs (one per line):</label><br>
-  <textarea id="excludedUrls" rows="10" cols="50"></textarea><br>
   <button id="save">Save</button>
   <button id="load">Load</button>
+
+  <h2>Endpoints</h2>
+  <label for="thothdEndpoint">thothd URL</label>
+  <input id="thothdEndpoint"></input><br>
+
+  <label for="embeddingEndpoint">Embedding server URL</label>
+  <input id="embeddingEndpoint"></input><br>
+  
+  <h2>Excluded URLs</h2>
+  <label for="excludedUrls">Excluded URLs (one per line):</label><br>
+  <textarea id="excludedUrls" rows="10" cols="50"></textarea><br>
 
   <script src="options.js"></script>
 </body>

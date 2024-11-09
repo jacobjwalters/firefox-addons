@@ -1,7 +1,8 @@
-const embeddingEndpoint = 'http://localhost:11434/embedding'
-const pgEndpoint = 'http://qs:5434'
+let embeddingEndpoint = ''
+let thothdEndpoint = ''
 const activeTimeThreshold = 60
 
+// Per-page globals
 let resultsContainer
 let activeTime = 0
 let intervalId
@@ -12,10 +13,10 @@ let pageEmbedding = []
 let similarPages
 
 function log(...args) {
-  console.log("[semantic-search]", ...args)
+  console.log("[thoth]", ...args)
 }
 function err(...args) {
-  console.error("[semantic-search]", ...args)
+  console.error("[thoth]", ...args)
 }
 
 function loadCSS() {
@@ -77,7 +78,7 @@ async function processPage(article, text) {
 
 async function index(data) {
   try {
-    return await postRequest(pgEndpoint+'/index-webpage', data)
+    return await postRequest(thothdEndpoint+'/index-webpage', data)
   } catch (error) {
     err('Error during indexing:', error)
   }
@@ -85,7 +86,7 @@ async function index(data) {
 
 async function query(ty, e) {
   try {
-    res = await postRequest(pgEndpoint+"/query", { "query_type": ty, "embedding": e })
+    res = await postRequest(thothdEndpoint+"/query", { "query_type": ty, "embedding": e })
     return res
   } catch (error) {
     err('Error during querying:', error)
@@ -270,7 +271,7 @@ function isUrlExcluded(url, excludedUrls) {
 
 async function isUrlIndexed(url) {
   try {
-    res = await postRequest(pgEndpoint+"/is_indexed", { "url": url })
+    res = await postRequest(thothdEndpoint+"/is_indexed", { "url": url })
     return res['indexed'][0]
   } catch (error) {
     err('Error during indexing check:', error)
@@ -279,7 +280,7 @@ async function isUrlIndexed(url) {
 
 async function urlCount(url) {
   try {
-    res = await postRequest(pgEndpoint+"/is_indexed", { "url": url })
+    res = await postRequest(thothdEndpoint+"/is_indexed", { "url": url })
     return res['count']
   } catch (error) {
     err('Error during counting:', error)
@@ -370,7 +371,7 @@ browser.runtime.onMessage.addListener(async (message) => {
   }
   if (message.command === "url-changed") {
     stopTimer()
-    await setValues()
+    await initAddon()
     if (document.visibilityState === 'visible' && !indexed) {
       startTimer()
     }
@@ -384,10 +385,19 @@ document.addEventListener('visibilitychange', async () => {
   }
 })
 
-async function setValues() {
+async function initAddon() {
   const url = window.location.href
-  const result = await browser.storage.sync.get('excludedUrls')
-  const excludedUrls = result.excludedUrls || []
+  const storage = await browser.storage.sync.get('options')
+
+  if (!storage.options) {
+    alert('thoth: You need to set your endpoints!')
+  }
+  const options = storage.options
+
+  thothdEndpoint = options.thothdEndpoint || ''
+  embeddingEndpoint = options.embeddingEndpoint || ''
+  const excludedUrls = options.excludedUrls || []
+
   excluded = isUrlExcluded(url, excludedUrls)
   indexed = await isUrlIndexed(url)
   if (indexed || excluded) {
@@ -398,7 +408,7 @@ async function setValues() {
 }
 
 async function run() {
-  await setValues()
+  await initAddon()
   displayCount()
   loadCSS()
   await initTimer()
